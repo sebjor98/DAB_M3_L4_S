@@ -7,6 +7,9 @@ var logger = require("morgan");
 var passport = require("passport");
 var session = require("express-session");
 var SQLiteStore = require("connect-sqlite3")(session);
+const swaggerUi = require("swagger-ui-express");
+const swaggerFile = require("./swagger-output.json");
+const bodyParser = require("body-parser");
 
 var indexRouter = require("./routes/index");
 var authRouter = require("./routes/auth");
@@ -28,7 +31,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-
 app.use(
   session({
     secret: "random text",
@@ -38,12 +40,14 @@ app.use(
   })
 );
 app.use(passport.authenticate("session"));
+app.use(bodyParser.json());
 
 app.use("/", indexRouter);
 app.use("/", authRouter);
 app.use("/users", usersRouter);
 app.use("/hotels", hotelsRouter);
 app.use("/rooms", roomsRouter);
+app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

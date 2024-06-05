@@ -5,10 +5,14 @@ var jsonParser = bodyParser.json();
 var HotelService = require("../services/HotelService");
 var db = require("../models");
 var hotelService = new HotelService(db);
+
 /* GET hotels listing. */
 router.get("/", async function (req, res, next) {
+  // #swagger.tags = ['Hotels']
+  // #swagger.description = "Gets the list of all available hotels."
+  // #swagger.produces = ['text/html']
   const hotels = await hotelService.get();
-  res.render("hotels", { hotels: hotels });
+  res.status(200).render("hotels", { hotels: hotels });
 });
 
 router.get("/:hotelId", async function (req, res, next) {
@@ -24,10 +28,20 @@ router.post("/:hotelId/rate", jsonParser, async function (req, res, next) {
 });
 
 router.post("/", jsonParser, async function (req, res, next) {
+  // #swagger.tags = ['Hotels']
+  // #swagger.description = "Creates a new hotel."
+  /* #swagger.parameters['body'] =  {
+    "name": "body",
+    "in": "body",
+      "schema": {
+        $ref: "#/definitions/Hotel"
+      }
+    }
+  */
   let Name = req.body.Name;
   let Location = req.body.Location;
   await hotelService.create(Name, Location);
-  res.end();
+  res.status(200).end();
 });
 
 router.delete("/", jsonParser, async function (req, res, next) {
