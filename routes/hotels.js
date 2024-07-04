@@ -2,6 +2,8 @@ var express = require("express");
 var router = express.Router();
 var bodyParser = require("body-parser");
 var jsonParser = bodyParser.json();
+var createError = require("http-errors");
+
 var HotelService = require("../services/HotelService");
 var db = require("../models");
 var hotelService = new HotelService(db);
@@ -38,6 +40,14 @@ router.post("/", jsonParser, async function (req, res, next) {
       }
     }
   */
+  if (req.body.Name == null || req.body.Location == null) {
+    next(
+      createError(
+        400,
+        "Both Name and Location need to be provided in the request"
+      )
+    );
+  }
   let Name = req.body.Name;
   let Location = req.body.Location;
   await hotelService.create(Name, Location);
