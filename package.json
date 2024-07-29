@@ -6,6 +6,7 @@
     "start": "node swagger"
   },
   "dependencies": {
+    "chromedriver": "^127.0.0",
     "connect-sqlite3": "^0.9.13",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
@@ -19,6 +20,7 @@
     "mysql2": "^2.3.3",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
+    "selenium-webdriver": "^4.23.0",
     "sequelize": "^6.27.0",
     "sqlite3": "^5.0.2",
     "swagger-autogen": "^2.23.7",
