@@ -120,8 +120,8 @@
           "text/html"
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": ""
           }
         }
       },

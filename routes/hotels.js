@@ -3,6 +3,7 @@ var router = express.Router();
 var bodyParser = require("body-parser");
 var jsonParser = bodyParser.json();
 var createError = require("http-errors");
+var client = require("../redis.js");
 
 var HotelService = require("../services/HotelService");
 var db = require("../models");
@@ -14,7 +15,8 @@ router.get("/", async function (req, res, next) {
   // #swagger.description = "Gets the list of all available hotels."
   // #swagger.produces = ['text/html']
   const hotels = await hotelService.get();
-  res.status(200).render("hotels", { hotels: hotels });
+  await client.set(req.originalUrl, JSON.stringify(hotels));
+  res.render("hotels", { hotels: hotels });
 });
 
 router.get("/:hotelId", async function (req, res, next) {
