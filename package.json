@@ -20,6 +20,7 @@
     "mysql2": "^2.3.3",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
+    "redis": "^4.7.0",
     "selenium-webdriver": "^4.23.0",
     "sequelize": "^6.27.0",
     "sqlite3": "^5.0.2",
